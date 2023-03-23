@@ -48,6 +48,29 @@ namespace PetShop.Controllers
         // GET: Consulta/Create
         public IActionResult Create()
         {
+            List<Cliente> clientes = _context.Clientes.AsNoTracking().ToList();
+            List<SelectListItem> selectListClientes = clientes.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Nome
+            }).ToList();
+            ViewBag.Cliente = selectListClientes;
+
+            List<Estoque> Estoque = _context.Estoques.AsNoTracking().ToList();
+            List<SelectListItem> selectListEstoque = Estoque.Select(e => new SelectListItem
+            {
+                Value = e.Id.ToString(),
+                Text = e.Nome
+            }).ToList();
+            ViewBag.Estoque = selectListEstoque;
+
+            List<Funcionario> Funcionario = _context.Funcionarios.AsNoTracking().ToList();
+            List<SelectListItem> selectListFuncionario = Funcionario.Select(f => new SelectListItem
+            {
+                Value = f.Id.ToString(),
+                Text = f.Nome
+            }).ToList();
+            ViewBag.Funcionario = selectListFuncionario;
             return View();
         }
 
@@ -56,7 +79,7 @@ namespace PetShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       public async Task<IActionResult> Create([Bind("Id,Valor,Atividade,Data")] Consulta consulta)
+       public async Task<IActionResult> Create([Bind("Id,Valor,Atividade,Data,Clientes,Funcionarios,Estoques")] Consulta consulta)
         {
             if (ModelState.IsValid)
             {
