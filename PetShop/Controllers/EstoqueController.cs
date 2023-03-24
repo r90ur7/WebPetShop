@@ -56,10 +56,11 @@ namespace PetShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Fornecedor,Quantidade,Preco,Data")] Estoque estoque)
+        public async Task<IActionResult> Create(Estoque estoque)
         {
             if (ModelState.IsValid)
             {
+                estoque.Data = DateTime.Now;
                 _context.Add(estoque);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

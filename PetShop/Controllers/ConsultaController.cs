@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetShop.Data;
@@ -22,9 +18,9 @@ namespace PetShop.Controllers
         // GET: Consulta
         public async Task<IActionResult> Index()
         {
-              return _context.Consultas != null ? 
-                          View(await _context.Consultas.ToListAsync()) :
-                          Problem("Entity set 'PetShopDbContext.Consultas'  is null.");
+            return _context.Consultas != null ?
+                        View(await _context.Consultas.ToListAsync()) :
+                        Problem("Entity set 'PetShopDbContext.Consultas'  is null.");
         }
 
         // GET: Consulta/Details/5
@@ -36,6 +32,9 @@ namespace PetShop.Controllers
             }
 
             var consulta = await _context.Consultas
+                .Include(x => x.Clientes)
+                .Include(y => y.Estoques)
+                .Include(z => z.Funcionarios)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (consulta == null)
             {
@@ -74,12 +73,8 @@ namespace PetShop.Controllers
             return View();
         }
 
-        // POST: Consulta/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-       public async Task<IActionResult> Create([Bind("Id,Valor,Atividade,Data,Clientes,Funcionarios,Estoques")] Consulta consulta)
+        public async Task<IActionResult> Create(Consulta consulta)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +82,7 @@ namespace PetShop.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(consulta);
+           return View(consulta);
         }
 
         // GET: Consulta/Edit/5
@@ -173,14 +168,14 @@ namespace PetShop.Controllers
             {
                 _context.Consultas.Remove(consulta);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ConsultaExists(int id)
         {
-          return (_context.Consultas?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Consultas?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

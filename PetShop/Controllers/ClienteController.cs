@@ -45,18 +45,13 @@ namespace PetShop.Controllers
             return View(cliente);
         }
 
-        // GET: Cliente/Create
         public IActionResult Create()
         {
             return View();
         }
-
-        // POST: Cliente/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome")] Cliente cliente)
+        public async Task<IActionResult> Create(Cliente cliente)
         {
             if (ModelState.IsValid)
             {

@@ -50,13 +50,9 @@ namespace PetShop.Controllers
         {
             return View();
         }
-
-        // POST: Funcionario/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Funcao")] Funcionario funcionario)
+        public async Task<IActionResult> Create(Funcionario funcionario)
         {
             if (ModelState.IsValid)
             {
