@@ -16,3 +16,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+.departaments {
+    position: absolute;
+    width: 10%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    background-color: purple;
+    background-image: linear-gradient(to bottom left,#78058d, #940014);
+    opacity:1.5
+    
+}
+.foot_wrapper {
+    position: relative;
+    background-color: lightpink;
+    background-image: linear-gradient(to bottom,#301c2e 46%, #940014 160%);
+    opacity:2
+}

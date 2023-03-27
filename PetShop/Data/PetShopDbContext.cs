@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShop.Data.Mappings;
+using PetShop.Data.Populate;
 using PetShop.Models;
 
 namespace PetShop.Data
@@ -18,6 +19,7 @@ namespace PetShop.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ConsultaMapeamento();
+            modelBuilder.PopulateDataBase();
         }
     }
 }

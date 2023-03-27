@@ -10,32 +10,41 @@
     <h4>Consulta</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Valor)
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Valor): 
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-12">
             @Html.DisplayFor(model => model.Valor)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Atividade)
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Atividade): 
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-12">
             @Html.DisplayFor(model => model.Atividade)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Data)
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Data): 
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-12">
             @Html.DisplayFor(model => model.Data)
         </dd>
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.Funcionarios)
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Funcionarios.Nome): 
         </dt>
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.Estoques)
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.Funcionarios.Nome)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Clientes.Nome): 
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Clientes)
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.Clientes.Nome)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Estoques.Nome):
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.Estoques.Nome)
         </dd>
     </dl>
 </div>

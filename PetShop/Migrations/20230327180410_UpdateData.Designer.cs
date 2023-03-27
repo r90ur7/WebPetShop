@@ -12,8 +12,8 @@ using PetShop.Data;
 namespace PetShop.Migrations
 {
     [DbContext(typeof(PetShopDbContext))]
-    [Migration("20230322203759_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230327180410_UpdateData")]
+    partial class UpdateData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,21 +24,6 @@ namespace PetShop.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ConsultaEstoque", b =>
-                {
-                    b.Property<int>("ConsultasId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EstoquesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ConsultasId", "EstoquesId");
-
-                    b.HasIndex("EstoquesId");
-
-                    b.ToTable("ConsultaEstoque");
-                });
-
             modelBuilder.Entity("PetShop.Models.Cliente", b =>
                 {
                     b.Property<int>("Id")
@@ -47,18 +32,30 @@ namespace PetShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ConsultaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConsultaId");
-
                     b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Rallenson"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "João"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Gabi"
+                        });
                 });
 
             modelBuilder.Entity("PetShop.Models.Consulta", b =>
@@ -72,13 +69,28 @@ namespace PetShop.Migrations
                     b.Property<string>("Atividade")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("EstoqueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FuncionarioId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("EstoqueId");
+
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("Consultas");
                 });
@@ -109,6 +121,17 @@ namespace PetShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Estoques");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Data = new DateTime(2023, 3, 27, 15, 4, 9, 796, DateTimeKind.Local).AddTicks(4224),
+                            Fornecedor = "Json Json",
+                            Nome = "Shampoo",
+                            Preco = 5,
+                            Quantidade = 90
+                        });
                 });
 
             modelBuilder.Entity("PetShop.Models.Funcionario", b =>
@@ -119,9 +142,6 @@ namespace PetShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ConsultasId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Funcao")
                         .HasColumnType("nvarchar(max)");
 
@@ -130,47 +150,57 @@ namespace PetShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConsultasId");
-
                     b.ToTable("Funcionarios");
-                });
 
-            modelBuilder.Entity("ConsultaEstoque", b =>
-                {
-                    b.HasOne("PetShop.Models.Consulta", null)
-                        .WithMany()
-                        .HasForeignKey("ConsultasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetShop.Models.Estoque", null)
-                        .WithMany()
-                        .HasForeignKey("EstoquesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PetShop.Models.Cliente", b =>
-                {
-                    b.HasOne("PetShop.Models.Consulta", null)
-                        .WithMany("Clientes")
-                        .HasForeignKey("ConsultaId");
-                });
-
-            modelBuilder.Entity("PetShop.Models.Funcionario", b =>
-                {
-                    b.HasOne("PetShop.Models.Consulta", "Consultas")
-                        .WithMany("Funcionarios")
-                        .HasForeignKey("ConsultasId");
-
-                    b.Navigation("Consultas");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Funcao = "Gerente",
+                            Nome = "Rosen"
+                        });
                 });
 
             modelBuilder.Entity("PetShop.Models.Consulta", b =>
                 {
+                    b.HasOne("PetShop.Models.Cliente", "Clientes")
+                        .WithMany("Consultas")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetShop.Models.Estoque", "Estoques")
+                        .WithMany("Consultas")
+                        .HasForeignKey("EstoqueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetShop.Models.Funcionario", "Funcionarios")
+                        .WithMany("Consultas")
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Clientes");
 
+                    b.Navigation("Estoques");
+
                     b.Navigation("Funcionarios");
+                });
+
+            modelBuilder.Entity("PetShop.Models.Cliente", b =>
+                {
+                    b.Navigation("Consultas");
+                });
+
+            modelBuilder.Entity("PetShop.Models.Estoque", b =>
+                {
+                    b.Navigation("Consultas");
+                });
+
+            modelBuilder.Entity("PetShop.Models.Funcionario", b =>
+                {
+                    b.Navigation("Consultas");
                 });
 #pragma warning restore 612, 618
         }

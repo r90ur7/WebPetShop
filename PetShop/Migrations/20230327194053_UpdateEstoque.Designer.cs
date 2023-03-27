@@ -12,8 +12,8 @@ using PetShop.Data;
 namespace PetShop.Migrations
 {
     [DbContext(typeof(PetShopDbContext))]
-    [Migration("20230324194646_UPDATECONSULTA")]
-    partial class UPDATECONSULTA
+    [Migration("20230327194053_UpdateEstoque")]
+    partial class UpdateEstoque
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,23 @@ namespace PetShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Rallenson"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "João"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Gabi"
+                        });
                 });
 
             modelBuilder.Entity("PetShop.Models.Consulta", b =>
@@ -104,6 +121,26 @@ namespace PetShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Estoques");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Data = new DateTime(2023, 3, 27, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            Fornecedor = "Json Json",
+                            Nome = "Shampoo",
+                            Preco = 5,
+                            Quantidade = 90
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Data = new DateTime(2023, 7, 27, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            Fornecedor = "Json Json",
+                            Nome = "Condicionador",
+                            Preco = 5,
+                            Quantidade = 90
+                        });
                 });
 
             modelBuilder.Entity("PetShop.Models.Funcionario", b =>
@@ -123,6 +160,14 @@ namespace PetShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Funcionarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Funcao = "Gerente",
+                            Nome = "Rosen"
+                        });
                 });
 
             modelBuilder.Entity("PetShop.Models.Consulta", b =>

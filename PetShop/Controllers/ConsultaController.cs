@@ -18,9 +18,12 @@ namespace PetShop.Controllers
         // GET: Consulta
         public async Task<IActionResult> Index()
         {
-            return _context.Consultas != null ?
-                        View(await _context.Consultas.ToListAsync()) :
-                        Problem("Entity set 'PetShopDbContext.Consultas'  is null.");
+            var consulta = _context.Consultas
+                .Include(x => x.Clientes)
+                .Include(y => y.Estoques)
+                .Include(z => z.Funcionarios)
+                .AsNoTracking().ToList();
+            return View(consulta);
         }
 
         // GET: Consulta/Details/5
@@ -53,16 +56,12 @@ namespace PetShop.Controllers
                 Value = c.Id.ToString(),
                 Text = c.Nome
             }).ToList();
-            ViewBag.Cliente = selectListClientes;
-
             List<Estoque> Estoque = _context.Estoques.AsNoTracking().ToList();
             List<SelectListItem> selectListEstoque = Estoque.Select(e => new SelectListItem
             {
                 Value = e.Id.ToString(),
                 Text = e.Nome
             }).ToList();
-            ViewBag.Estoque = selectListEstoque;
-
             List<Funcionario> Funcionario = _context.Funcionarios.AsNoTracking().ToList();
             List<SelectListItem> selectListFuncionario = Funcionario.Select(f => new SelectListItem
             {
@@ -70,6 +69,8 @@ namespace PetShop.Controllers
                 Text = f.Nome
             }).ToList();
             ViewBag.Funcionario = selectListFuncionario;
+            ViewBag.Estoque = selectListEstoque;
+            ViewBag.Cliente = selectListClientes;
             return View();
         }
 
@@ -82,7 +83,7 @@ namespace PetShop.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return View(consulta);
+            return View(consulta);
         }
 
         // GET: Consulta/Edit/5
@@ -94,6 +95,27 @@ namespace PetShop.Controllers
             }
 
             var consulta = await _context.Consultas.FindAsync(id);
+            List<Cliente> clientes = _context.Clientes.AsNoTracking().ToList();
+            List<SelectListItem> selectListClientes = clientes.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Nome
+            }).ToList();
+            List<Estoque> Estoque = _context.Estoques.AsNoTracking().ToList();
+            List<SelectListItem> selectListEstoque = Estoque.Select(e => new SelectListItem
+            {
+                Value = e.Id.ToString(),
+                Text = e.Nome
+            }).ToList();
+            List<Funcionario> Funcionario = _context.Funcionarios.AsNoTracking().ToList();
+            List<SelectListItem> selectListFuncionario = Funcionario.Select(f => new SelectListItem
+            {
+                Value = f.Id.ToString(),
+                Text = f.Nome
+            }).ToList();
+            ViewBag.Funcionario = selectListFuncionario;
+            ViewBag.Estoque = selectListEstoque;
+            ViewBag.Cliente = selectListClientes;
             if (consulta == null)
             {
                 return NotFound();
@@ -106,7 +128,7 @@ namespace PetShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Valor,Atividade,Data")] Consulta consulta)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Valor,Atividade,Data, EstoqueId, ClienteId, FuncionarioId")] Consulta consulta)
         {
             if (id != consulta.Id)
             {
