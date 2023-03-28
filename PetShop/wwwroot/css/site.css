@@ -1,5 +1,7 @@
 html {
   font-size: 14px;
+  margin:0;
+  padding:0
 }
 
 @media (min-width: 768px) {
@@ -16,20 +18,75 @@ html {
 body {
   margin-bottom: 60px;
 }
+.Link-logo{
+    display:block;
+    width:100%;
+    height:20vh;
+}
+.image-logo {
+    width: 100%;
+    height: 100%;
+}
+
+.header-wrapper {
+    margin: 0;
+    padding: 0;
+}
+.Logo-Text{
+    margin-bottom:10px
+}
 .departaments {
     position: absolute;
-    width: 10%;
-    height: 85%;
+    width: 15%;
+    height: 91.8vh;
     display: flex;
     flex-direction: column;
     background-color: purple;
     background-image: linear-gradient(to bottom left,#78058d, #940014);
-    opacity:1.5
-    
+    opacity: 1.5;
+    border: 1px solid #940014
+}
+.departaments-wrapper{
+    margin:0;
+    width:100%;
+    margin-top:15px;
+}
+.departaments-wrapper-List {
+    list-style: none;
+    font-family: Helvetica, sans-serif;
+    text-decoration: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    height: 91.8vh;
+    gap:20px;
+}
+.List-item {
+    margin-bottom: 4px;
+    width: 100%;
+    text-align: center;
+
+}
+.List-item:hover {
+    width: 100%;
+    background: black;
+    border-radius: 24px;
+ }
+.Link-item {
+    color: floralwhite;
+    text-decoration: none;
+    text-transform: none;
+}
+.Link-item:hover {
+  color: burlywood;
+ }
+.btn-hamburguer{
+    display:none
 }
 .foot_wrapper {
     position: relative;
     background-color: lightpink;
     background-image: linear-gradient(to bottom,#301c2e 46%, #940014 160%);
-    opacity:2
+    opacity: 2
 }
