@@ -11,10 +11,10 @@
 <body>
     <header class="departaments">
         <nav class="">
-            <div class="container-fluid header-wrapper">
+            <div class="header-wrapper">
                 <a class="Link-logo" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img class="image-logo" alt="Logo" src="Assests/Petshop.svg" />
-                    <spanc class="Logo-Text" >PetShop Carreiras</spanc>
+                    <img class="image-logo" alt="Logo" src="~/Assests/Petshop.svg" />
+                    <span class="Logo-Text" >PetShop Carreiras</span>
                 </a>
                 <button class="btn-hamburguer" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="Container-wrapper">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
