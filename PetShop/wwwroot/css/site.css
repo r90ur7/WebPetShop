@@ -18,6 +18,11 @@ html {
 body {
     display:flex;
     margin-bottom: 60px;
+    background-image:url(../Assests/Bacgrounds/FundoParalax.png);
+}
+.Petshop-Index{
+    width:250px;
+    height:250px;
 }
 .Link-logo {
     display: block;
